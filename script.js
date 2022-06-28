@@ -42,7 +42,6 @@ container.addEventListener('click', function (e) {
         });
 
         //console.log(selectedSeatIndexs);
-
         //console.log(seatsArr);
         //console.log(selectedSeatsArr);
 
