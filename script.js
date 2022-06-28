@@ -5,6 +5,9 @@ const select = document.getElementById('movie');
 const seats = container.querySelectorAll('.seat:not(.reserved)');
 
 
+getFromLocalStorage();
+calculateTotal();
+
 
 container.addEventListener('click', function (e) {
     //console.log(e.target);
@@ -53,6 +56,30 @@ function calculateTotal() {
 
     saveToLocalStorage(selectedSeatIndexs);
 }
+
+
+function getFromLocalStorage(){
+    
+    const selectedSeats = JSON.parse(localStorage.getItem('selectedSeats'));
+
+    if (selectedSeats != null && selectedSeats.length > 0){
+        seats.forEach(function(seat, indexInLocalStorage){
+            if (selectedSeats.indexOf(indexInLocalStorage) > -1){
+                seat.classList.add('selected');
+            }
+        });
+    }
+
+
+    const selectedMovieIndex = localStorage.getItem('selectedMovieIndex');
+
+    if (selectedMovieIndex != null){
+        select.selectedIndex = selectedMovieIndex;
+    }
+
+
+}
+
 
 function saveToLocalStorage(index) {
     localStorage.setItem('selectedSeats', JSON.stringify(index));
