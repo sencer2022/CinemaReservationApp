@@ -15,48 +15,47 @@ container.addEventListener('click', function (e) {
         e.target.classList.toggle('selected'); // toggle: Varsa kaldırır, yoksa ekler.
         calculateTotal();
     }
+});
 
 
-    select.addEventListener('change', function (e) {
-        calculateTotal();
+select.addEventListener('change', function (e) {
+    calculateTotal();
+});
+
+
+function calculateTotal() {
+    const selectedSeats = container.querySelectorAll('.seat.selected');
+    //console.log(selectedSeats);
+    //console.log(seats);
+    selectedSeatsArr = [];
+    seatsArr = [];
+
+    selectedSeats.forEach(function (seat) {
+        selectedSeatsArr.push(seat);
     });
 
+    seats.forEach(function (seat) {
+        seatsArr.push(seat);
+    });
 
-    function calculateTotal() {
-        const selectedSeats = container.querySelectorAll('.seat.selected');
-        //console.log(selectedSeats);
-        //console.log(seats);
-        selectedSeatsArr = [];
-        seatsArr = [];
+    let selectedSeatIndexs = selectedSeatsArr.map(function (seat) {
+        return seatsArr.indexOf(seat);
+    });
 
-        selectedSeats.forEach(function(seat){
-            selectedSeatsArr.push(seat);
-        });
+    //console.log(selectedSeatIndexs);
 
-        seats.forEach(function(seat){
-            seatsArr.push(seat);
-        });
+    //console.log(seatsArr);
+    //console.log(selectedSeatsArr);
 
-        let selectedSeatIndexs = selectedSeatsArr.map(function(seat){
-            return seatsArr.indexOf(seat);
-        });
+    let selectedSeatCount = selectedSeats.length;
+    count.innerText = selectedSeatCount;
+    amount.innerText = selectedSeatCount * select.value;
 
-        //console.log(selectedSeatIndexs);
+    saveToLocalStorage(selectedSeatIndexs);
+}
 
-        //console.log(seatsArr);
-        //console.log(selectedSeatsArr);
+function saveToLocalStorage(index) {
+    localStorage.setItem('selectedSeats', JSON.stringify(index));
+    localStorage.setItem('selectedMovieIndex', select.selectedIndex);
+}
 
-        let selectedSeatCount = selectedSeats.length;
-        count.innerText = selectedSeatCount;
-        amount.innerText = selectedSeatCount * select.value;
-
-        saveToLocalStorage(selectedSeatIndexs);
-    }
-
-    function saveToLocalStorage(index){
-        localStorage.setItem('selectedSeats', JSON.stringify(index));
-        console.log(select.selectedIndex);
-        localStorage.setItem('selectedMovieIndex', select.selectedIndex);
-    }
-
-});
